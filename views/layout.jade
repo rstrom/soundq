@@ -1,0 +1,24 @@
+!!!
+html(ng-app="qApp")
+  head
+    meta(
+      name='viewport',
+      content='width=device-width, initial-scale=1.0'
+    )  
+    base(href='/')
+    title soundq
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/app.css')
+    script(src='//connect.soundcloud.com/sdk.js')
+    script(src='//code.jquery.com/jquery-1.10.1.min.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.js')
+    script(src='lib/sortable.js')
+    script(src='js/app.js')
+    script(src='js/services.js')
+    script(src='js/controllers.js')
+    script(src='js/filters.js')
+    script(src='js/directives.js')
+  body(ng-controller='QCtrl')
+    block body

@@ -1,0 +1,87 @@
+body {
+  font-family: Courier;
+}
+
+h3 {
+  color: black;
+  text-shadow: 2px 2px white;
+}
+
+h5 {
+  font-weight: bold;
+  text-overflow: ellipsis;
+}
+
+.playing {
+  width: 100%; height: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.playing i {
+  position: absolute;
+  left: 100px; top: 80px;
+  font-size: 144px;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+.list-group {
+  margin-bottom: 0;
+}
+
+.list-group-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: 70px;
+  padding: 10px;
+  background: none;
+  cursor: pointer;
+}
+
+.list-group-item-info {
+  background: rgba(217,237,247,0.8);
+}
+
+.list-group-item:first-child {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.list-group-item:last-child {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.art {
+  width: 65px; height: 60px;
+  padding-right: 15px;
+  display: inline-block;
+  float: left;
+}
+
+.art img {
+  width: 50px; height: 50px;
+}
+
+img.wave {
+  z-index: -1;
+  position: absolute;
+  top: -120px; left: 0;
+  width: 100%; height: 240px;
+}
+
+span.user {
+  font-style: italic;
+}
+
+span.data {
+  font-size: 12px;
+}

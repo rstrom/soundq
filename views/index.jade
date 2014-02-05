@@ -1,0 +1,61 @@
+extends layout
+
+block body
+  div.col.col-lg-4
+    div.playing(
+      ng-show='playing.track',
+      back='{{playing.track.art}}',
+      ng-click='playing.playPause()'
+    )
+      h1 {{player.progress}}
+      i.glyphicon.glyphicon-play(ng-show='playing.state == "paused"')
+      i.glyphicon.glyphicon-pause(ng-show='playing.state == "playing"')
+      h3 {{playing.track.title}}
+
+    ul.list-group(ui-sortable ng-model='queue.tracks')
+      li.list-group-item(
+        ng-repeat='track in queue.tracks',
+        ng-click='playing.cue($index)'
+      ) 
+        div.art
+          img(
+            ng-src='{{track.art}}'
+          )
+        span.data.pull-right
+          i.glyphicon.glyphicon-heart 
+          |   {{track.favoritings_count | number}}   
+          i.glyphicon.glyphicon-play 
+          |   {{track.playback_count | number}}
+        span.user {{track.username}}
+        h5 {{track.title}}
+
+    input.form-control(
+      type='search', 
+      ng-model='search.input',
+      search
+    )
+
+    ul.list-group
+      li.list-group-item(
+        ng-repeat='result in search.results', 
+        ng-class='{ "list-group-item-info": search.selected == $index }',
+        ng-mouseover='search.selected = $index',
+        ng-click='queue.add($index)',
+      ) 
+        div.art
+          img(
+            ng-src='{{result.artwork_url}}',
+            ng-show='result.artwork_url'
+          )
+          img(
+            ng-src='{{result.user.avatar_url}}',
+            ng-hide='result.artwork_url'
+          )
+        span.data.pull-right
+          {{result.duration}}
+          i.glyphicon.glyphicon-heart 
+          |   {{result.favoritings_count | number}}   
+          i.glyphicon.glyphicon-play 
+          |   {{result.playback_count | number}}
+        span.user {{result.user.username}}
+        h5 {{result.title}}
