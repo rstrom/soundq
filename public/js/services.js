@@ -66,8 +66,9 @@ angular.module('qApp.services', []).
       }
     }
     audio.addEventListener('ended', function () {
-      console.log(ended)
-      scope.playing.cue(0)
+      console.log('ended')
+      $rootScope.playing.state = null
+      $rootScope.playing.cue(0)
     })
     audio.addEventListener('timeupdate', function () {
       $rootScope.$apply(function() {

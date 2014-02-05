@@ -1,23 +1,31 @@
 'use strict';
 
 angular.module('qApp.controllers', []).
-  controller('QCtrl', function ($scope, socket, player) {
+  controller('QCtrl', function ($scope, $rootScope, socket, player) {
     socket.emit('user:join')
 
     $scope.player = player;
 
-    $scope.playing = {
-      state: 'uninitialized',
+    $rootScope.playing = {
+      state: null,
       track: null,
       playPause: function () {
         if ($scope.playing.state == 'playing') {
           socket.emit('pause')
+          player.pause()
+          $scope.playing.state = 'paused'
         } else {
           socket.emit('play')
+          player.play()
+          $scope.playing.state = 'playing'
         }
       },
       cue: function (i) {
-        socket.emit('play:track', $scope.queue.tracks.splice(i, 1)[0])
+        var track = $scope.queue.tracks.splice(i, 1)[0]
+        socket.emit('play:track', track)
+        player.stream(track.stream_url)
+        $scope.playing.track = track
+        $scope.playing.state = 'playing'
       }
     }
 
@@ -59,8 +67,16 @@ angular.module('qApp.controllers', []).
     }
 
     socket.on('user:join', function () {
-      if($scope.queue.tracks) {
+      if ($scope.queue.tracks) {
         socket.emit('change:queue', $scope.queue.tracks, function (result) {
+          console.log(result)
+        })
+      }
+      if ($scope.playing.state) {
+        socket.emit('play:state', {
+          state: $scope.playing.state,
+          track: $scope.playing.track
+        }, function (result) {
           console.log(result)
         })
       }
@@ -70,9 +86,12 @@ angular.module('qApp.controllers', []).
       $scope.queue.tracks = data
     })
 
+    socket.on('play:state', function (data) {
+      $scope.playing.state = data.state
+      $scope.playing.track = data.track
+    })
+
     socket.on('play:track', function (track) {
-      console.log('play:track')
-      console.log(track)
       player.stream(track.stream_url)
       $scope.playing.track = track
       $scope.playing.state = 'playing'
